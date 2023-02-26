@@ -39,6 +39,16 @@ app.put("/musicians/:id", async function(request, response) {
     }
 })
 
+app.delete("/musicians/:id", async function(request, response) {
+    try{
+        const musician = await Musician.destroy({where: {id: request.params.id}})
+        response.status(200).send({musician})
+    }
+    catch(error){
+        response.status(500).send({error: error.message})
+    }
+})
+
 app.listen(port, () => {
     sequelize.sync();
     console.log(`Your server is listening on port: http://localhost:${port}/musicians`)
