@@ -1,18 +1,18 @@
 const express = require("express");
 const app = express();
-const {Musician} = require("./Musician")
+const {Musician} = require("./models/Musician")
 const {sequelize} = require("./db")
 
 const port = 3000;
 
 //TODO
 // app.use(express.static("public"))
-app.use(express.json())
+/* app.use(express.json())
 
 app.post("/musicians", async function(request, response) {
     try{
         const musician = await Musician.create(request.body)
-        response.status(200).send(musician)
+        response.status(200).send(Musician.findAll())
     }
     catch(error){
         response.send(500).status({error: error.message})
@@ -47,7 +47,7 @@ app.delete("/musicians/:id", async function(request, response) {
     catch(error){
         response.status(500).send({error: error.message})
     }
-})
+}) */
 
 app.listen(port, () => {
     sequelize.sync();
