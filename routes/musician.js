@@ -7,10 +7,16 @@ const {check, validationResult} = require("express-validator")
 
 router.use(express.json())
 
-router.post("/", async function(request, response) {
+router.post("/", [check("name").trim().not().isEmpty(), check("instrument").trim().not().isEmpty()] ,async function(request, response) {
     try{
-        await Musician.bulkCreate(seedMusician)
-        response.status(200).send(await Musician.findAll())
+        const errors = validationResult(request)
+        if(!errors.isEmpty()){
+            response.send(400).status(errors)
+        } 
+        else{
+            await Musician.create(request.body)
+            response.status(200).send(await Musician.findAll())
+        }
     }
     catch(error){
         response.send(500).status({error: error.message})
